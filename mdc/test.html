@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>D3 Tutorials</title>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js'></script>
+</head>
+
+<body>
+    <div class="date"></div>
+
+
+    <script>
+        var width = 500;
+        var height = 500;
+        var color = {};
+        var now = moment();
+        var canvas = d3.select("body")
+                .append("svg")
+                .attr('width', width + 100)
+                .attr('height', height + 100)
+                .style("background-color", "rgba(107, 112, 105, 0.1)")
+                .append("g")
+                .attr("transform", "translate(50, 50)");
+        var x;
+        var y;
+        
+
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+       
+    
+        var g_data; // 调试用
+        d3.csv("../data/20170224.csv", function (data) {
+            g_data = data;
+
+
+            var lat = data.map(d => d.lat)
+            var lng = data.map(d => d.lng)
+            var conntime = data.map(d => d.conntime);
+            var first_moment = moment(conntime[0])
+            var md5 = data.map(d => d.md5);
+
+            // 构建md5颜色映射表
+            for (var md in md5) {
+                color[md5[md]] = getRandomColor();
+            }
+            d3.select(".date").datum(now).text(d => d.format());
+
+            x = d3.scale.linear()
+                .domain([d3.min(lat), d3.max(lat)])
+                .range([0, width]);
+
+            y = d3.scale.linear()
+                .domain([d3.min(lng), d3.max(lng)])
+                .range([0, height]);
+
+            // 计算当前日期
+            now = moment(g_data[0].recitime, 'x')
+            today = moment(now.year() + '-' + (now.month() + 1) + '-' + now.date())
+            var i = 0;
+            time_interval = 1 // 分钟
+            loop_circle = 60*24 / time_interval;
+            loop();
+            function loop(){               
+                if(i > loop_circle)
+                    return;
+
+                current_data = data.filter(d => d.recitime >= now && d.recitime < (now + time_interval * 60 * 1000));
+                now = moment(today + i * time_interval * 60 * 1000);
+                render(current_data);
+                i = i+1;
+                setTimeout(loop, 200);
+
+            }
+            
+
+
+        });
+        function render(data) {
+            d3.selectAll(".date").text(now.format());
+            this_canvas = canvas.append("g");
+            // data = data.filter(d=>d.md5 == data[1].md5);
+            var map = data.map(
+                function (i) {
+                    return [i.lat, i.lng, i.md5];
+                }
+            );            
+            var bars = this_canvas.selectAll("g")
+                .data(map)
+                .enter()
+                .append("g");
+            bars.append("circle")
+                .attr("cx", d => x(d[0]))
+                .attr("cy", d => y(d[1]))
+                .attr("r", 1)
+                .attr("fill", d => (color[d[2]]))
+                .attr('fill-opacity', 0)
+                .transition()
+                .attr('fill-opacity', 1)
+                .duration(1000)
+                .transition()
+                .attr('fill-opacity', 0.1)
+                .duration(6000)
+                
+                ;
+        }
+    </script>
+
+</body>
+
+</html>
