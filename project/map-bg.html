@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="static/img/favicon.ico">
+    <!--我是孟德超-->
+    <title>垃圾短信的起源</title>
+
+    <!-- styles for buttons -->
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css" />
+
+    <!-- Bootstrap core CSS -->
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="static/css/dashboard.css" rel="stylesheet">
+    <script src="static/js/jquery.js"></script>
+    <script src="static/js/d3js.org/d3.v3.min.js"></script>
+    <!--<script>window.jQuery || document.write('<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"><\/script>')</script>-->
+    <script src="static/js/popper.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=oGKYINzhFdagSN9SQpoY1Tm1iIxvEe21"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/AreaRestriction/1.2/src/AreaRestriction_min.js"></script>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="#">撸猫</a>
+            <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">主页
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="heatmap.html">热力图</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="trajectory.html">轨迹</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">词云</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">帮助</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="date" active="true" href="#">帮助</a>
+                    </li>
+                </ul>
+                <form class="form-inline mt-2 mt-md-0">
+                    <select id="disabledSelect" class="form-control">
+                        <option>2月24日</option>
+                        <option>2月25日</option>
+                        <option>2月26日</option>
+                        <option>2月27日</option>
+                        <option>2月28日</option>
+                    </select>
+                    &nbsp;&nbsp;&nbsp;
+
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">查询天数</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div id="container"></div>
+            <div id="tip">拖动地图以确定轨迹图范围</div>
+            <div class="button-group">
+                <input type="button" class="button" onclick="setLimitBound()" value="选定范围" />
+                <input type="button" class="button" onclick="getLimitBound()" value="获取限制的区域" />
+                <!--<input type="button" class="button" onclick="clearLimitBound()" value="清除选定范围"/>-->
+            </div>
+            <script>
+                var map = new BMap.Map("container");
+                map.centerAndZoom(new BMap.Point(116.4035, 39.915), 12);
+                map.enableScrollWheelZoom();
+
+                function setLimitBound() {
+                    var boundlist = getLimitBound();
+                    console.log(boundlist);
+                    var b = new BMap.Bounds(new BMap.Point(boundlist[0], boundlist[1]), new BMap.Point(boundlist[2], boundlist[3]));
+                    try {
+                            BMapLib.AreaRestriction.setBounds(map, b);
+                            map.disableScrollWheelZoom(); // 不允许滚轮缩放
+                            map.disableDragging(); //不允许拖拽
+
+                    } catch (e) {
+                        alert(e);
+                    }
+                }
+
+                function getLimitBound() {
+                    var bs = map.getBounds();   //获取可视区域
+                    var southwest = bs.getSouthWest();   //可视区域左下角
+                    var northeast = bs.getNorthEast();   //可视区域右上角
+
+                    console.log(southwest.lng, southwest.lat, northeast.lng, northeast.lat);
+                    return [southwest.lng, southwest.lat, northeast.lng, northeast.lat];
+                }
+
+            </script>
+        </div>
+    </div>
