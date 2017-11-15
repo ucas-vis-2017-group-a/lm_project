@@ -11,7 +11,7 @@
     <title>垃圾短信的起源</title>
 
     <!-- styles for buttons -->
-    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css" />
+    <link rel="stylesheet" href="static/css/map-bg.css" />
 
     <!-- Bootstrap core CSS -->
     <link href="static/css/bootstrap.min.css" rel="stylesheet">
@@ -23,7 +23,7 @@
     <!--<script>window.jQuery || document.write('<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"><\/script>')</script>-->
     <script src="static/js/popper.min.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=oGKYINzhFdagSN9SQpoY1Tm1iIxvEe21"></script>
+    <!--<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=oGKYINzhFdagSN9SQpoY1Tm1iIxvEe21"></script>-->
     <script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/library/AreaRestriction/1.2/src/AreaRestriction_min.js"></script>
 </head>
@@ -85,21 +85,31 @@
             <div class="button-group">
                 <input type="button" class="button" onclick="setLimitBound()" value="选定范围" />
                 <input type="button" class="button" onclick="getLimitBound()" value="获取限制的区域" />
-                <!--<input type="button" class="button" onclick="clearLimitBound()" value="清除选定范围"/>-->
+                <!--<input type="button" class="button" onclick="clearLimitBound()" value="清除选定范围" />-->
             </div>
             <script>
-                var map = new BMap.Map("container");
-                map.centerAndZoom(new BMap.Point(116.4035, 39.915), 12);
-                map.enableScrollWheelZoom();
+                function loadJScript() {
+                    var script = document.createElement("script");
+                    script.type = "text/javascript";
+                    script.src = "http://api.map.baidu.com/api?v=2.0&ak=oGKYINzhFdagSN9SQpoY1Tm1iIxvEe21&callback=init";
+                    document.body.appendChild(script);
+                }
+                function init() {
+                    var map = new BMap.Map("container");
+                    map.centerAndZoom(new BMap.Point(116.4035, 39.915), 12);
+                    map.enableScrollWheelZoom();                 //启用滚轮放大缩小
+                }
+                window.onload = loadJScript;  //异步加载地图
+                
 
                 function setLimitBound() {
                     var boundlist = getLimitBound();
                     console.log(boundlist);
                     var b = new BMap.Bounds(new BMap.Point(boundlist[0], boundlist[1]), new BMap.Point(boundlist[2], boundlist[3]));
                     try {
-                            BMapLib.AreaRestriction.setBounds(map, b);
-                            map.disableScrollWheelZoom(); // 不允许滚轮缩放
-                            map.disableDragging(); //不允许拖拽
+                        BMapLib.AreaRestriction.setBounds(map, b);
+                        map.disableScrollWheelZoom(); // 不允许滚轮缩放
+                        map.disableDragging(); //不允许拖拽
 
                     } catch (e) {
                         alert(e);
@@ -113,6 +123,12 @@
 
                     console.log(southwest.lng, southwest.lat, northeast.lng, northeast.lat);
                     return [southwest.lng, southwest.lat, northeast.lng, northeast.lat];
+                }
+
+                function clearLimitBound() {
+                    map.centerAndZoom(new BMap.Point(116.4035, 39.915), 12);
+                    map.enableScrollWheelZoom();
+                    map.enableDragging();
                 }
 
             </script>
