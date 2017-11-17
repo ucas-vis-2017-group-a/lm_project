@@ -23,7 +23,7 @@
     <!--<script>window.jQuery || document.write('<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"><\/script>')</script>-->
     <script src="static/js/popper.min.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
-    <!--<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=oGKYINzhFdagSN9SQpoY1Tm1iIxvEe21"></script>-->
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=oGKYINzhFdagSN9SQpoY1Tm1iIxvEe21"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/library/AreaRestriction/1.2/src/AreaRestriction_min.js"></script>
 </head>
@@ -80,26 +80,23 @@
     <div class="container-fluid">
         <div class="row">
 
-            <div id="container"></div>
+            <div id="container" style="width:500px;height:500px"></div>
             <div id="tip">拖动地图以确定轨迹图范围</div>
             <div class="button-group">
                 <input type="button" class="button" onclick="setLimitBound()" value="选定范围" />
                 <input type="button" class="button" onclick="getLimitBound()" value="获取限制的区域" />
-                <!--<input type="button" class="button" onclick="clearLimitBound()" value="清除选定范围" />-->
+                <input type="button" class="button" onclick="clearLimitBound()" value="清除选定范围" />
             </div>
             <script>
-                function loadJScript() {
-                    var script = document.createElement("script");
-                    script.type = "text/javascript";
-                    script.src = "http://api.map.baidu.com/api?v=2.0&ak=oGKYINzhFdagSN9SQpoY1Tm1iIxvEe21&callback=init";
-                    document.body.appendChild(script);
-                }
-                function init() {
+//                function loadJScript() {
+
+//                }
+//                function init() {
                     var map = new BMap.Map("container");
                     map.centerAndZoom(new BMap.Point(116.4035, 39.915), 12);
                     map.enableScrollWheelZoom();                 //启用滚轮放大缩小
-                }
-                window.onload = loadJScript;  //异步加载地图
+//                }
+//                window.onload = loadJScript;  //异步加载地图
 
 
                 function setLimitBound() {
