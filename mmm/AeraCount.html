@@ -1,0 +1,2174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+    <script type="text/javascript" src="d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script type="text/javascript"
+            src="http://api.map.baidu.com/api?v=2.0&ak=oGKYINzhFdagSN9SQpoY1Tm1iIxvEe21"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+    <title>热力图功能示例</title>
+    <style type="text/css">
+        ul, li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            float: left;
+        }
+
+        html {
+            height: 100%
+        }
+
+        body {
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+            font-family: "微软雅黑";
+        }
+
+        #container {
+            height: 700px;
+            width: 100%;
+        }
+
+        #r-result {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="container"></div>
+<!--<div id="r-result">
+    <input type="button"  onclick="openHeatmap();" value="显示热力图"/><input type="button"  onclick="closeHeatmap();" value="关闭热力图"/>-->
+</div>
+</body>
+</html>
+<script type="text/javascript">
+
+    var arrayPoints = new Array();
+    var m;
+    var points = [];
+    var arrayPoint = new Array();
+    var n;
+    var count;
+    var count1;
+    d3.csv("mentougou.csv", function (error, csvdata) {
+
+
+        if (error) {
+            console.log(error);
+        }
+
+        for (var i = 0; i < csvdata.length; i++) {
+            var lat = csvdata[i].lat;
+            var lng = csvdata[i].lng;
+            arrayPoints[i] = [parseFloat(lng), parseFloat(lat)];
+
+        }
+        m = csvdata.length - 1;
+
+        while (m--) {
+            var point = new BMap.Point(arrayPoints[m][0], arrayPoints[m][1]);
+            //console.log(point);
+            points.push(point);
+        }
+        this.ptInPolygon(points);
+    });
+
+    //点在多边形内
+    function ptInPolygon(pts) {
+
+
+        var ply = new BMap.Polygon(pts);
+
+        d3.csv("20170223.csv", function (error, csvdata1) {
+            //d3.csv(path + ".csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            //count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+
+            //alert(count);
+
+            console.log("0223" + "+" + count);
+
+
+        });
+        d3.csv("20170224.csv", function (error, csvdata1) {
+            //d3.csv(path + ".csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            //count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+
+            //alert(count);
+
+            console.log("0224" + "+" + count);
+
+
+        });
+        d3.csv("20170225.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0225" + "+" + count);
+            //alert(count);
+        });
+        d3.csv("20170226.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0226" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170227.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0227" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170228.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0228" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170301.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0301" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170302.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0302" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170303.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0303" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170304.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0304" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170305.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0305" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170306.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0306" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170307.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0307" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170308.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0308" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170309.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0309" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170310.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0310" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170311.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0311" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170312.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0312" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170313.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0313" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170314.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0314" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170315.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0315" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170316.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0316" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170317.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0317" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170318.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0318" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170319.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0319" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170320.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0320" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170321.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0321" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170322.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0322" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170323.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0323" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170324.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0324" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170325.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0325" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170326.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0326" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170327.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0327" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170328.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0328" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170329.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0329" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170330.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0330" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170331.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0331" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170401.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0401" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170402.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0402" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170403.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0403" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170404.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0404" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170405.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0405" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170406.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0406" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170407.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0407" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170408.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0408" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170409.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0409" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170410.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0410" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170411.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0411" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170412.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0412" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170413.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0413" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170414.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0414" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170415.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0415" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170416.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0416" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170417.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0417" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170418.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0418" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170419.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0419" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170420.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0420" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170421.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0421" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170422.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0422" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170423.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0423" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170424.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0424" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170425.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0425" + "+" + count);
+            //alert(count);
+
+        });
+        d3.csv("20170426.csv", function (error, csvdata1) {
+
+            if (error) {
+                console.log(error);
+            }
+
+            for (var i = 0; i < csvdata1.length; i++) {
+                var lat = csvdata1[i].lat;
+                var lng = csvdata1[i].lng;
+                arrayPoint[i] = new BMap.Point(parseFloat(lng), parseFloat(lat));
+            }
+            n = arrayPoint.length;
+            count = 0;
+
+
+            while (n--) {
+                //var point = new BMap.Point(arrayPoint[n][0], arrayPoint[n][1]);
+                var result = this.isPointInPolygon(arrayPoint[n], ply);
+                if (result == true) {
+                    //console.log("点在多边形内");
+                    count++;
+
+                } else {
+                    //console.log("点在多边形外");
+                    count1++;
+                }
+            }
+            // var pt = new BMap.Point(116.5, 39.5);
+            console.log("0426" + "+" + count);
+            //alert(count);
+
+        });
+    }
+
+    function isPointInPolygon(o, l) {
+        if (!(o instanceof BMap.Point) || !(l instanceof BMap.Polygon)) {
+            return false
+        }
+        /*
+         var k = l.getBounds();
+         if (!this.isPointInPolygon(o, k)) {
+         return false
+         }*/
+        var t = l.getPath();
+        var h = t.length;
+        var n = true;
+        var j = 0;
+        var g = 2e-10;
+        var s, q;
+        var e = o;
+        s = t[0];
+        for (var f = 1; f <= h; ++f) {
+            if (e.equals(s)) {
+                return n
+            }
+            q = t[f % h];
+            if (e.lat < Math.min(s.lat, q.lat) || e.lat > Math.max(s.lat, q.lat)) {
+                s = q;
+                continue
+            }
+            if (e.lat > Math.min(s.lat, q.lat) && e.lat < Math.max(s.lat, q.lat)) {
+                if (e.lng <= Math.max(s.lng, q.lng)) {
+                    if (s.lat == q.lat && e.lng >= Math.min(s.lng, q.lng)) {
+                        return n
+                    }
+                    if (s.lng == q.lng) {
+                        if (s.lng == e.lng) {
+                            return n
+                        } else {
+                            ++j
+                        }
+                    } else {
+                        var r = (e.lat - s.lat) * (q.lng - s.lng) / (q.lat - s.lat) + s.lng;
+                        if (Math.abs(e.lng - r) < g) {
+                            return n
+                        }
+                        if (e.lng < r) {
+                            ++j
+                        }
+                    }
+                }
+            } else {
+                if (e.lat == q.lat && e.lng <= q.lng) {
+                    var m = t[(f + 1) % h];
+                    if (e.lat >= Math.min(s.lat, m.lat) && e.lat <= Math.max(s.lat, m.lat)) {
+                        ++j
+                    } else {
+                        j += 2
+                    }
+                }
+            }
+            s = q
+        }
+        if (j % 2 == 0) {
+            return false
+        } else {
+            return true
+        }
+    };
+
+</script>
