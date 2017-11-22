@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>testdrag</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>D3 Tutorials</title>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js'></script>
+</head>
+
+<body>
+    <div class="date"></div>
+
+
+    <script>
+        var width = 500;
+        var height = 500;
+        var color = {};
+        var now = moment();
+        var drag = d3.behavior.drag();
+
+        var canvas = d3.select("body")
+                .append("svg")
+                .call(drag)
+                .attr('width', width + 100)
+                .attr('height', height + 100)
+                .style("background-color", "rgba(255, 112, 105, 1)")
+//                .append("g")
+//                .attr("transform", "translate(50, 50)");
+
+        var begin_point = {};
+        var rect;
+        var end_point = {};
+        drag.on("dragstart", function() {
+            console.log(d3.event);
+            begin_point.x = d3.event.sourceEvent.x;
+            begin_point.y = d3.event.sourceEvent.y;
+            rect = canvas.append("rect")
+                .attr("x", d3.event.sourceEvent.x)
+                .attr("y", d3.event.sourceEvent.y)
+                .attr("width", 0)
+                .attr("height", 0)
+                .attr("fill-opacity", 0)
+                .attr("stroke", "black");
+        });
+        drag.on("drag", function() {
+            rect.attr("width", d3.event.sourceEvent.x - begin_point.x)
+                .attr("height", d3.event.sourceEvent.y - begin_point.y);
+        });
+        drag.on("dragend", function() {
+            end_point = {
+                x:d3.event.sourceEvent.x,
+                y:d3.event.sourceEvent.y
+            };
+            console.log("dragend");
+            rect.remove();
+        });
+
+    </script>
+
+</body>
+
+</html>
+</body>
+</html>

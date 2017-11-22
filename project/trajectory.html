@@ -48,7 +48,7 @@
                     <a class="nav-link" href="#">词云</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">帮助</a>
+                    <button class="nav-link">帮助</button>
                 </li>
 
                 <li class="nav-item" >
@@ -56,17 +56,18 @@
                 </li>
             </ul>
             <form class="form-inline mt-2 mt-md-0">
-                <select id="disabledSelect" class="form-control">
-                    <option>2月24日</option>
-                    <option>2月25日</option>
-                    <option>2月26日</option>
-                    <option>2月27日</option>
-                    <option>2月28日</option>
+                <select id="dataSelect" class="form-control">
+                    <option value="20170224">2月24日</option>
+                    <option value="20170225">2月25日</option>
+                    <option value="20170226">2月26日</option>
+                    <option value="20170227">2月27日</option>
+                    <option value="20170228">2月28日</option>
                 </select>
                 &nbsp;&nbsp;&nbsp;
 
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">查询天数</button>
+
             </form>
+            <button class="btn btn-outline-success my-2 my-sm-0" onclick="downloadData()">下载数据</button>
         </div>
     </nav>
 </header>
@@ -79,25 +80,73 @@
 
 
             <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js'></script>
-                <div id="canvas" style="background-color:white;" ></div>
+                <div id="canvas"></div>
 
 
 
 
             <script>
+                var data;
+                var downloadData = function(){
+                    var selectText = $("#dataSelect").find("option:selected").val();
+                    console.log(selectText);
+                    d3.csv("../data/" + selectText + ".csv", function (d) {
+                        data = d;
+                        console.log("数据已准备好");
+
+                    });
+                }
                 var time_interval = 10; // 分钟
                 var width = $(window).width() - 100;
                 var height = width;
                 var color = {};
                 var now = moment();
+                var drag = d3.behavior.drag()
                 var canvas = d3.select("#canvas")
+                    .on("click", function(d){
+                        console.log(d3.event);
+                    })
+
                     .append("svg")
+                    .call(drag)
                     .attr('width', width + 100)
                     .attr('height', height + 100)
-                    .style("background-color", "rgba(107, 112, 105, 0.1)")
+                    .style("background-color", "rgba(107, 112, 105, 0.1)");
 //                    .style("background-color", "white")
-                    .append("g")
-                    .attr("transform", "translate(50, 50)");
+//                    .append("g")
+//                    .attr("transform", "translate(50, 50)");
+
+                var begin_point = {};
+                var rect;
+                var end_point = {};
+                drag.on("dragstart", function() {
+                    console.log(d3.event);
+                    begin_point.x = d3.event.sourceEvent.x;
+                    begin_point.y = d3.event.sourceEvent.y;
+                    rect = canvas.append("rect")
+                        .attr("x", d3.event.sourceEvent.x)
+                        .attr("y", d3.event.sourceEvent.y)
+                        .attr("width", 0)
+                        .attr("height", 0)
+                        .attr("fill-opacity", 0)
+                        .attr("stroke", "black");
+                });
+                drag.on("drag", function() {
+                    rect.attr("width", d3.event.sourceEvent.x - begin_point.x)
+                        .attr("height", d3.event.sourceEvent.y - begin_point.y);
+                });
+                drag.on("dragend", function() {
+                    end_point = {
+                        x:d3.event.sourceEvent.x,
+                        y:d3.event.sourceEvent.y
+                    };
+                    console.log("dragend");
+                    rect.remove();
+                });
+
+
+
+
                 var time_canvas = d3.select("#date");
                 var x;
                 var y;
@@ -114,8 +163,8 @@
 
 
                 var g_data; // 调试用
-                d3.csv("../data/20170224.csv", function (data) {
-//                    data = data.filter(d=> d.md5 == data[100].md5);
+
+                function startRender() {
                     g_data = data;
                     console.log(data);
 
@@ -161,7 +210,7 @@
                     }
 
 
-                });
+                }
                 function render(data) {
                     time_canvas.text(now.format());
                     this_canvas = canvas.append("g");
@@ -187,7 +236,10 @@
                         .transition()
                         .attr('fill-opacity', 0.1)
                         .duration(6000);
+
                 }
+
+
             </script>
 
 
