@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+    <script type="text/javascript" src="d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <title>饼状图</title>
+
+</head>
+<body>
+<div>
+    <span>请输入您想查询的天数(如：21)：</span>
+    <input type="text"id="data">
+    <button onclick="Count()">确认</button>
+</div>
+
+</body>
+</html>
+<script type="text/javascript">
+
+function Count(j) {
+    var aeraName;
+
+    var width = 600;
+    var height = 600;
+    var dataset = [];
+
+    var svg = d3.select("body").append("svg")
+        .attr("width",width)
+        .attr("height",height);
+
+    var pie = d3.layout.pie();
+
+    var outerRadius = width / 5;
+    var innerRadius = width / 10;
+    var arc = d3.svg.arc()
+        //.innerRadius(innerRadius)
+        .outerRadius(outerRadius);
+
+    var color = d3.scale.category10();
+    d3.csv("AeraCount.csv", function (error, csvdata) {
+
+
+        if (error) {
+            console.log(error);
+        }
+        for( var i=0; i<csvdata.length; i++ ) {
+            var day=parseInt(csvdata[i].day);
+            var changping=parseInt(csvdata[i].changping);
+            var chaoyang=parseInt(csvdata[i].chaoyang);
+            var chongwen=parseInt(csvdata[i].chongwen);
+            var daxing=parseInt(csvdata[i].daxing);
+            var dongcheng=parseInt(csvdata[i].dongcheng);
+            var fangshan=parseInt(csvdata[i].fangshan);
+            var fengtai=parseInt(csvdata[i].fengtai);
+            var haidinan=parseInt(csvdata[i].haidinan);
+            var huairou=parseInt(csvdata[i].huairou);
+            var mentougou=parseInt(csvdata[i].mentougou);
+            var miyun=parseInt(csvdata[i].miyun);
+            var pinggu=parseInt(csvdata[i].pinggu);
+            var shijingshan=parseInt(csvdata[i].shijingshan);
+            var shunyi=parseInt(csvdata[i].shunyi);
+            var tongzhou=parseInt(csvdata[i].tongzhou);
+            var xicheng=parseInt(csvdata[i].xicheng);
+            var xuanwu=parseInt(csvdata[i].xuanwu);
+            var yanqing=parseInt(csvdata[i].yanqing);
+            var total=parseInt(csvdata[i].total);
+            dataset[i]=[changping,chaoyang,chongwen,daxing,dongcheng,fangshan,fengtai,haidinan,huairou,mentougou,miyun,pinggu,shijingshan,shunyi,tongzhou,xicheng,xuanwu,yanqing];
+
+        }
+        d3.selectAll("svg").remove();
+        var svg = d3.select("body").append("svg")
+            .attr("width",width)
+            .attr("height",height);
+        var m=parseInt(document.getElementById("data").value);
+if(m>=1&&m<=63)
+{
+     j = parseInt(document.getElementById("data").value-1);
+    var arcs = svg.selectAll("g")
+        .data(pie(dataset[j]))
+        .enter()
+        .append("g")
+        .attr("transform","translate("+outerRadius+","+outerRadius+")");
+
+
+
+    arcs.append("path")
+        .attr("fill",function(d,i){
+            return color(i);
+        })
+        .attr("d",function(d){
+            return arc(d);
+        })
+        .on("mouseover",function(d,i){
+            d3.select(this)
+                .append("title")
+                .text(function(d) {
+                    if(i==0)
+                        aeraName="昌平区";
+                    else if(i==1)
+                        aeraName="朝阳区";
+                    else if(i==2)
+                        aeraName="崇文区";
+                    else if(i==3)
+                        aeraName="大兴区";
+                    else if(i==4)
+                        aeraName="东城区";
+                    else if(i==5)
+                        aeraName="房山区";
+                    else if(i==6)
+                        aeraName="丰台区";
+                    else if(i==7)
+                        aeraName="海淀区";
+                    else if(i==8)
+                        aeraName="怀柔区";
+                    else if(i==9)
+                        aeraName="门头沟区";
+                    else if(i==10)
+                        aeraName="密云区";
+                    else if(i==11)
+                        aeraName="平谷区";
+                    else if(i==12)
+                        aeraName="石景山区";
+                    else if(i==13)
+                        aeraName="顺义区";
+                    else if(i==14)
+                        aeraName="通州区";
+                    else if(i==15)
+                        aeraName="西城区";
+                    else if(i==16)
+                        aeraName="宣武区";
+                    else if(i==17)
+                        aeraName="延庆区";
+                    return aeraName+"今天一共有"+d.value+"条垃圾短信。";
+                });
+        });
+}else
+    alert("您输入的时间有误。")
+   /* arcs.append("text")
+        .attr("transform",function(d){
+            return "translate(" + arc.centroid(d) + ")";
+        })
+        .attr("text-anchor","middle")
+        .text(function(d) {
+            return d.value;
+        });
+*/
+    });
+}
+</script>
