@@ -24,6 +24,18 @@
             src="http://api.map.baidu.com/api?v=2.0&ak=oGKYINzhFdagSN9SQpoY1Tm1iIxvEe21"></script>
     <script type="text/javascript"
             src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+    <style>
+        .svgA{
+            position: absolute;
+            left: 10px;
+            top: 30px;
+        }
+            .svgB{
+            position: absolute;
+            left: 140px;
+            top: 30px;
+        }
+    </style>
 </head>
 
 <body>
@@ -257,10 +269,12 @@
 
                 var color = d3.scale.category10();
                 d3.selectAll("svg").remove();
-                var svg1 = d3.select("body").append("svg")
+                var svg1 = d3.select("#container").append("svg")
+                    .attr("class","svgA")
                     .attr("width", width)
                     .attr("height", height);
-                var svg2 = d3.select("body").append("svg")
+                var svg2 = d3.select("#container").append("svg")
+                    .attr("class","svgB")
                     .attr("width", width)
                     .attr("height", height);
                 d3.csv("../mmm/AeraCount.csv", function (error, csvdata) {
