@@ -42,7 +42,7 @@
                         </a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="heatmap.html">热力图</a>
+                        <a class="nav-link" href="vis-index.html">热力图</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="trajectory.html">轨迹</a>
@@ -116,9 +116,8 @@
     <input type="button"  onclick="openHeatmap();" value="显示热力图"/><input type="button"  onclick="closeHeatmap();" value="关闭热力图"/>-->
     <script>
 
-        /*d3.select("#container")
-            .style("width", $(window).width() + 'px')
-            .style("height", $(window).height() + 'px');*/
+        // 待补充：监听header上的选项：当点击<a>时，调用加入iframe方法，传入参数为<a>的内容
+
         $("#container").append("<iframe> </iframe>");
         //$("iframe").hide();
         $("iframe").attr("src", "i-heatmap.html");
