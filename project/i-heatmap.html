@@ -75,7 +75,15 @@
     map.centerAndZoom(point, 12);             // 初始化地图，设置中心点坐标和地图级别
     map.enableScrollWheelZoom(); // 允许滚轮缩放
 
-    this.getCurrentLatAndLon();
+
+    function getCurrentCenterAndLevel() {
+
+
+       return {
+           center:map.getCenter(),
+           level: map.getZoom()
+       }
+    }
 
     function getCurrentLatAndLon() {
         var bs = map.getBounds();   //获取可视区域
@@ -98,10 +106,6 @@
 
 
     function heatMap() {
-       /* var map = new BMap.Map("container");          // 创建地图实例
-        var point = new BMap.Point(116.418261, 39.921984);
-        map.centerAndZoom(point, 12);             // 初始化地图，设置中心点坐标和地图级别
-        map.enableScrollWheelZoom(); // 允许滚轮缩放*/
 
         var date = '' + '../data/' + 2017 + parent.$("#disabledSelect").val() + parent.$("#disabledSelect1").val() + '.csv';
         console.log(date);
@@ -152,6 +156,7 @@
          其中 key 表示插值的位置, 0~1.
          value 为颜色值.
          */
+            map.removeOverlay(heatmapOverlay);
             heatmapOverlay = new BMapLib.HeatmapOverlay({"radius": 40});
             map.addOverlay(heatmapOverlay);
             heatmapOverlay.setDataSet({data: points, max: 150000});
