@@ -129,7 +129,7 @@
         $("iframe").attr("width", $(window).width() / 2 + 'px').attr("height", $(window).height() - 56.4 + 'px').attr("margin", "0");
         $("#container").append("<iframe class='trajectory'> </iframe>");
         $(".trajectory").attr('src', "i-trajectory.html");
-        $(".trajectory").attr('width',  $(window).width() / 2 + 'px').attr("height", $(window).height() - 56.4 + 'px').attr("margin", "0");
+        $(".trajectory").attr('width',  ($(window).width() / 2 - 0.5) + 'px').attr("height", $(window).height() - 56.4 + 'px').attr("margin", "0");
 
 
         function enableIframe() {
@@ -137,17 +137,11 @@
             if ($("iframe").attr("src") == "i-heatmap.html") {
                 iframe.heatMap();
                 iframe.Count();
-                var lat_and_lon = {
-                    begin: {
-                        lat: 100,
-                        lon: 100
-                    },
-                    end: {
-                        lat:100,
-                        end:100
-                    }
+                var center_and_level = {
+                    center_point:(116.418261, 39.921984),
+                    level: 12
                 };
-                lat_and_lon = iframe.getCurrentLatAndLon()
+//                center_and_level = iframe.getCurrentCenterAndLevel()
             }
             var trajectory_iframe = $('iframe.trajectory')[0].contentWindow;
             trajectory_iframe.startRender();
