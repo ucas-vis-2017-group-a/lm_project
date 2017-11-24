@@ -22,7 +22,11 @@
     <script src="static/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=oGKYINzhFdagSN9SQpoY1Tm1iIxvEe21"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
-    
+    <style>
+        iframe{
+            float:left;
+        }
+    </style>
 </head>
 
 <body>
@@ -120,15 +124,33 @@
 
         $("#container").append("<iframe> </iframe>");
         //$("iframe").hide();
-        $("iframe").attr("src", "i-heatmap.html");
-        $("iframe").attr("width", $(window).width() + 'px').attr("height", $(window).height() - 56.4 + 'px').attr("margin", "0");
+        $("iframe").attr("src", "i-heatmap.html")
+
+        $("iframe").attr("width", $(window).width() / 2 + 'px').attr("height", $(window).height() - 56.4 + 'px').attr("margin", "0");
+        $("#container").append("<iframe class='trajectory'> </iframe>");
+        $(".trajectory").attr('src', "i-trajectory.html");
+        $(".trajectory").attr('width',  $(window).width() / 2 + 'px').attr("height", $(window).height() - 56.4 + 'px').attr("margin", "0");
+
 
         function enableIframe() {
             var iframe = $("iframe")[0].contentWindow;
             if ($("iframe").attr("src") == "i-heatmap.html") {
                 iframe.heatMap();
                 iframe.Count();
+                var lat_and_lon = {
+                    begin: {
+                        lat: 100,
+                        lon: 100
+                    },
+                    end: {
+                        lat:100,
+                        end:100
+                    }
+                };
+                lat_and_lon = iframe.getCurrentLatAndLon()
             }
+            var trajectory_iframe = $('iframe.trajectory')[0].contentWindow;
+            trajectory_iframe.startRender();
         }
     </script>
 
