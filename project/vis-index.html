@@ -26,13 +26,30 @@
         iframe{
             float:left;
         }
+        .hist{
+            position:absolute;
+            bottom:0;
+            left:0;
+            right:0;
+            height:20%;
+            width:100%;
+            opacity:0;
+            transition:opacity 2s;
+            -moz-transition:opacity 2s; /* Firefox 4 */
+            -webkit-transition:opacity 2s; /* Safari and Chrome */
+            -o-transition:opacity 2s; /* Opera */
+        }
+        .hist:hover{
+            /*background-color:yellow;*/
+            opacity:1;
+        }
     </style>
 </head>
 
 <body>
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="#">撸猫</a>
+            <a class="navbar-brand" href="index.html">撸猫</a>
             <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
                 aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -41,26 +58,20 @@
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">主页
+                        <a class="nav-link" href="index.html">主页
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="vis-index.html">热力图</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="trajectory.html">轨迹</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">词云</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">帮助</a>
+                        <a class="nav-link" href="vis-index.html">可视化</a>
                     </li>
 
+
                     <li class="nav-item">
-                        <a class="nav-link" id="date" active="true" href="#">帮助</a>
+                        <a class="nav-link" href="help.html">帮助</a>
                     </li>
+
+
                 </ul>
                 <form class="form-inline mt-2 mt-md-0">
                     <select id="disabledSelect" class="form-control" onchange="this.parentNode.nextSibling.value=this.value">
@@ -102,7 +113,11 @@
                         <option value="30">30日</option>
                         <option value="31">31日</option>
                     </select>
-                    <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="enableIframe()">查询天数
+                    &nbsp;
+                    <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="enableIframe()">热力图
+                    </button>
+                    &nbsp;
+                    <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="enableTrajectory()">轨迹图
                     </button>
                 </form>
             </div>
@@ -131,18 +146,28 @@
         $(".trajectory").attr('src', "i-trajectory.html");
         $(".trajectory").attr('width',  ($(window).width() / 2 - 0.5) + 'px').attr("height", $(window).height() - 56.4 + 'px').attr("margin", "0");
 
+        // 直方图
+        $("#container").append("<iframe class='hist'> </iframe>");
+        $('.hist').attr('src', "i-hist.html");
+        $('iframe').attr('frameborder', 0);
 
+        var center_and_level;
+        var iframe;
         function enableIframe() {
-            var iframe = $("iframe")[0].contentWindow;
+
+            iframe = $("iframe")[0].contentWindow;
+
             if ($("iframe").attr("src") == "i-heatmap.html") {
                 iframe.heatMap();
                 iframe.Count();
-                var center_and_level = {
-                    center_point:(116.418261, 39.921984),
-                    level: 12
-                };
-//                center_and_level = iframe.getCurrentCenterAndLevel()
+
+
             }
+
+
+        }
+        function enableTrajectory(){
+            center_and_level = iframe.getCurrentCenterAndLevel()
             var trajectory_iframe = $('iframe.trajectory')[0].contentWindow;
             trajectory_iframe.startRender();
         }

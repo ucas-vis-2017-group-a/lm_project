@@ -59,9 +59,9 @@
 
         });
     }
-    var time_interval = 10; // 分钟
-    var width = $(window).width() - 100;
-    var height = width;
+    var time_interval = 1; // 分钟
+    var width = $('#map_container').width()- 1;
+    var height = $('#map_container').height() - 6;
     var color = {};
     var now = moment();
     var drag = d3.behavior.drag()
@@ -73,7 +73,7 @@
         .attr('height', ($('#map_container').height() - 6) + 'px')
         //                    .attr('width', width + 100)
         //                    .attr('height', height + 100)
-        .style("background-color", "rgba(107, 112, 105, 0.1)");
+        .style("background-color", "rgba(107, 112, 105, 0)");
     //                    .style("background-color", "white")
     //                    .append("g")
     //                    .attr("transform", "translate(50, 50)");
@@ -123,11 +123,17 @@
 
 
     var g_data; // 调试用
-
+    var timeout_id;
     function startRender() {
+        if(timeout_id){
+            clearTimeout(timeout_id);
+            canvas.selectAll("g").remove()
+        }
+
         var map = new BMap.Map("map_container");          // 创建地图实例
-        var point = new BMap.Point(116.418261, 39.921984);
-        map.centerAndZoom(point, 12);             // 初始化地图，设置中心点坐标和地图级别
+        console.log(parent.center_and_level)
+        var point = new BMap.Point(parent.center_and_level.center.lng, parent.center_and_level.center.lat);
+        map.centerAndZoom(point, parent.center_and_level.level);             // 初始化地图，设置中心点坐标和地图级别
         map.enableScrollWheelZoom(); // 允许滚轮缩放
         var date = '' + '../data/' + 2017 + parent.$("#disabledSelect").val() + parent.$("#disabledSelect1").val() + '.csv';
         d3.csv(date, function (data) {
@@ -147,14 +153,19 @@
             }
             // d3.select(".date").datum(now).text(d => d.format());
             time_canvas.datum(now).text(d => d.format());
+            console.log([map.getBounds().getSouthWest().lng, map.getBounds().getNorthEast().lng]);
             x = d3.scale.linear()
-                .domain([d3.min(lat), d3.max(lat)])
+                .domain([map.getBounds().getSouthWest().lng, map.getBounds().getNorthEast().lng])
                 .range([0, width]);
 
             y = d3.scale.linear()
-                .domain([d3.min(lng), d3.max(lng)])
+                .domain([map.getBounds().getSouthWest().lat, map.getBounds().getNorthEast().lat])
                 .range([0, height]);
-
+            data =  data.filter(data =>
+                    data.lat >= map.getBounds().getSouthWest().lat
+                    && data.lat <= map.getBounds().getNorthEast().lat
+                    && data.lng >= map.getBounds().getSouthWest().lng
+                    && data.lng <= map.getBounds().getNorthEast().lng);
             // 计算当前日期
             now = moment(g_data[0].recitime, 'x')
             today = moment(now.year() + '-' + (now.month() + 1) + '-' + now.date())
@@ -166,11 +177,15 @@
                 if (i > loop_circle)
                     return;
 
-                current_data = data.filter(d => d.recitime >= now && d.recitime < (now + time_interval * 60 * 1000));
+                current_data = data.filter(d => d.recitime >= now && d.recitime < (now + time_interval * 60 * 1000)
+
+
+
+                );
                 now = moment(today + i * time_interval * 60 * 1000);
                 render(current_data);
                 i = i + 1;
-                setTimeout(loop, 100);
+                timeout_id = setTimeout(loop, 100);
 
             }
 
@@ -182,7 +197,7 @@
             // data = data.filter(d=>d.md5 == data[1].md5);
             var map = data.map(
                 function (i) {
-                    return [i.lat, i.lng, i.md5];
+                    return [i.lng, i.lat, i.md5];
                 }
             );
             var bars = this_canvas.selectAll("g")
@@ -192,12 +207,12 @@
             bars.append("circle")
                 .attr("cx", d => x(d[0]))
                 .attr("cy", d => y(d[1]))
-                .attr("r", 1)
+                .attr("r", 5)
                 .attr("fill", d => (color[d[2]]))
                 .attr('fill-opacity', 0)
                 .transition()
                 .attr('fill-opacity', 1)
-                .duration(1000)
+                .duration(0)
                 .transition()
                 .attr('fill-opacity', 0.1)
                 .duration(6000);
