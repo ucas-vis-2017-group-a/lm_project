@@ -45,7 +45,7 @@
     var padding = {left:30, right:30, top:20, bottom:20};
 
     //定义一个数组
-    d3.csv("../mmm/total.csv", function (error, csvdata) {
+    d3.csv("TimeCount.csv", function (error, csvdata) {
 
                     console.log(csvdata);
                     if (error) {
@@ -53,38 +53,37 @@
                     }
                     dataset = []
                     for (var i = 0; i < csvdata.length; i++) {
-
-                        //改动（马明明）
-                        var one = parseInt(csvdata[i].a20170223);
-                        var two = parseInt(csvdata[i].a20170224);
-                        var three = parseInt(csvdata[i].a20170225);
-                        var four = parseInt(csvdata[i].a20170226);
-                        var five = parseInt(csvdata[i].a20170227);
-                        var six = parseInt(csvdata[i].a20170228);
-                        var seven = parseInt(csvdata[i].a20170301);
-                        var eight = parseInt(csvdata[i].a20170302);
-                        var night = parseInt(csvdata[i].a20170303);
-                        var ten = parseInt(csvdata[i].a20170304);
-                        var eleven = parseInt(csvdata[i].a20170305);
-                        var twelve = parseInt(csvdata[i].a20170306);
-                        var thirteen = parseInt(csvdata[i].a20170307);
-                        var fourteen = parseInt(csvdata[i].a20170308);
-                        var fifteen = parseInt(csvdata[i].a20170309);
-                        var sixteen = parseInt(csvdata[i].a20170310);
-                        var seventeen = parseInt(csvdata[i].a20170311);
-                        var eighteen = parseInt(csvdata[i].a20170312);
-                        var nighteen = parseInt(csvdata[i].a20170313);
-                        var twenty = parseInt(csvdata[i].a20170314);
-                        var twentyOne = parseInt(csvdata[i].a20170315);
-                        var twentyTwo = parseInt(csvdata[i].a20170316);
-                        var twentyThree = parseInt(csvdata[i].a20170317);
-                        var twentyFour = parseInt(csvdata[i].a20170318)
-
+                        var day = parseInt(csvdata[i].day);
+                        var one = parseInt(csvdata[i].one);
+                        var two = parseInt(csvdata[i].two);
+                        var three = parseInt(csvdata[i].three);
+                        var four = parseInt(csvdata[i].four);
+                        var five = parseInt(csvdata[i].five);
+                        var six = parseInt(csvdata[i].six);
+                        var seven = parseInt(csvdata[i].seven);
+                        var eight = parseInt(csvdata[i].eight);
+                        var night = parseInt(csvdata[i].night);
+                        var ten = parseInt(csvdata[i].ten);
+                        var eleven = parseInt(csvdata[i].eleven);
+                        var twelve = parseInt(csvdata[i].twelve);
+                        var thirteen = parseInt(csvdata[i].thirteen);
+                        var fourteen = parseInt(csvdata[i].fourteen);
+                        var fifteen = parseInt(csvdata[i].fifteen);
+                        var sixteen = parseInt(csvdata[i].sixteen);
+                        var seventeen = parseInt(csvdata[i].seventeen);
+                        var eighteen = parseInt(csvdata[i].eighteen);
+                        var nighteen = parseInt(csvdata[i].nighteen);
+                        var twenty = parseInt(csvdata[i].twenty);
+                        var twentyOne = parseInt(csvdata[i].twentyOne);
+                        var twentyTwo = parseInt(csvdata[i].twentyTwo);
+                        var twentyThree = parseInt(csvdata[i].twentyThree);
+                        var twentyFour = parseInt(csvdata[i].twentyFour)
+                        var total = parseInt(csvdata[i].total);
                         dataset[i] = [one, two, three, four, five, six, seven, eight, night, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nighteen, twenty, twentyOne, twentyTwo, twentyThree, twentyFour];
 
 
                     }
-                    var dataset = dataset[0];
+                    var dataset = dataset[2];
                     //x轴的比例尺
     var xScale = d3.scale.ordinal()
         .domain(d3.range(dataset.length))
@@ -108,8 +107,6 @@
     //矩形之间的空白
     var rectPadding = 4;
 
-    //获得时间（马明明）
-    var day;
     //添加矩形元素
     var rects = svg.selectAll(".MyRect")
         .data(dataset)
@@ -126,49 +123,36 @@
         .attr("width", xScale.rangeBand() - rectPadding )
         .attr("height", function(d){
             return height - padding.top - padding.bottom - yScale(d);
+        });
+
+    //添加文字元素
+    var texts = svg.selectAll(".MyText")
+        .data(dataset)
+        .enter()
+        .append("text")
+        .attr("class","MyText")
+        .attr("transform","translate(" + padding.left + "," + padding.top + ")")
+        .attr("x", function(d,i){
+            return xScale(i) + rectPadding/2;
+        } )
+        .attr("y",function(d){
+            return yScale(d);
         })
-        //马明明（开始）
-        .on("mousedown",function (d,i) {
-            if(i>=0&&i<=5)
-                day=20170223+i;
-            else if(i>=6&&i<=37)
-                day=20170301+i-6;
-            else if(i>=38)
-                day=20170401+i-38;
-        zhifangtu();
-    });
-function zhifangtu() {
-    console.log(day);
-}
-//结束
-              //添加文字元素
-              var texts = svg.selectAll(".MyText")
-                  .data(dataset)
-                  .enter()
-                  .append("text")
-                  .attr("class","MyText")
-                  .attr("transform","translate(" + padding.left + "," + padding.top + ")")
-                  .attr("x", function(d,i){
-                      return xScale(i) + rectPadding/2;
-                  } )
-                  .attr("y",function(d){
-                      return yScale(d);
-                  })
-                  .attr("dx",function(){
-                      return (xScale.rangeBand() - rectPadding)/2;
-                  })
-                  .attr("dy",function(d){
-                      return 20;
-                  })
-                  .text(function(d){
-                      return d;
-                  });
+        .attr("dx",function(){
+            return (xScale.rangeBand() - rectPadding)/2;
+        })
+        .attr("dy",function(d){
+            return 20;
+        })
+        .text(function(d){
+            return d;
+        });
 
     //添加x轴
     svg.append("g")
         .attr("class","axis")
         .attr("transform","translate(" + padding.left + "," + (height - padding.bottom) + ")")
-        .call(xAxis);
+        .call(xAxis); 
         
     //添加y轴
     svg.append("g")
