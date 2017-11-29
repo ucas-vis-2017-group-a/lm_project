@@ -117,7 +117,7 @@
                     <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="enableIframe()">热力图
                     </button>
                     &nbsp;
-                    <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="enableTrajectory()">轨迹图
+                    <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="parseTrajectory()">停止
                     </button>
                 </form>
             </div>
@@ -153,6 +153,11 @@
 
         var center_and_level;
         var iframe;
+        var startHour = 0;
+        function parseTrajectory() {
+            var trajectory_iframe = $('iframe.trajectory')[0].contentWindow;
+            trajectory_iframe.parseTrajectory();
+        }
         function enableIframe() {
 
             iframe = $("iframe")[0].contentWindow;
@@ -170,6 +175,18 @@
             center_and_level = iframe.getCurrentCenterAndLevel()
             var trajectory_iframe = $('iframe.trajectory')[0].contentWindow;
             trajectory_iframe.startRender();
+        }
+
+        function histSelect(date){
+            $("#disabledSelect").val((''+date).slice(4, 6));
+            $("#disabledSelect1").val((''+date).slice(6, 8));
+            console.log(date);
+            enableIframe();
+        }
+        function drawTrajectory(i){
+            startHour = i;
+            enableTrajectory();
+
         }
     </script>
 

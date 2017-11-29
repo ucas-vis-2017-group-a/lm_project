@@ -124,6 +124,9 @@
 
     var g_data; // 调试用
     var timeout_id;
+    function parseTrajectory(){
+        clearTimeout(timeout_id);
+    }
     function startRender() {
         if(timeout_id){
             clearTimeout(timeout_id);
@@ -168,7 +171,9 @@
                     && data.lng <= map.getBounds().getNorthEast().lng);
             // 计算当前日期
             now = moment(g_data[0].recitime, 'x')
-            today = moment(now.year() + '-' + (now.month() + 1) + '-' + now.date())
+            today = moment(now.year() + '-' + (now.month() + 1) + '-' + now.date());
+            today = moment(today + parent.startHour * 60 * 60 * 1000);
+
             var i = 0;
 
             loop_circle = 60 * 24 / time_interval;
