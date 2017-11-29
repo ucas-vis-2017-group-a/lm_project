@@ -29,6 +29,8 @@
 </style>
 
 <body>
+<script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js'></script>
+
 <script src="static/js/d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="static/js/jquery.js"></script>
 <script>
@@ -46,6 +48,9 @@
     //画布周边的空白
     var padding = {left: 30, right: 30, top: 20, bottom: 20};
 
+    function numToDate(num){
+        now = moment()
+    }
     //定义一个数组
     d3.csv("../mmm/total.csv", function (error, csvdata) {
 
@@ -176,7 +181,7 @@
                         day = 20170301 + i - 6;
                     else if (i >= 37)
                         day = 20170401 + i - 37;
-                    zhifangtu();
+                    parent.histSelect(day);
                 });
 
             function zhifangtu() {
