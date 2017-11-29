@@ -65,7 +65,7 @@
     var color = {};
     var now = moment();
     var drag = d3.behavior.drag()
-    console.log($(window).width());
+  //  console.log($(window).width());
     var canvas = d3.select("#canvas")
         .append("svg")
         .call(drag)
@@ -131,14 +131,14 @@
         }
 
         var map = new BMap.Map("map_container");          // 创建地图实例
-        console.log(parent.center_and_level)
+    //    console.log(parent.center_and_level)
         var point = new BMap.Point(parent.center_and_level.center.lng, parent.center_and_level.center.lat);
         map.centerAndZoom(point, parent.center_and_level.level);             // 初始化地图，设置中心点坐标和地图级别
         map.enableScrollWheelZoom(); // 允许滚轮缩放
         var date = '' + '../data/' + 2017 + parent.$("#disabledSelect").val() + parent.$("#disabledSelect1").val() + '.csv';
         d3.csv(date, function (data) {
             g_data = data;
-            console.log(data);
+           // console.log(data);
 
 
             var lat = data.map(d => d.lat)
@@ -153,7 +153,7 @@
             }
             // d3.select(".date").datum(now).text(d => d.format());
             time_canvas.datum(now).text(d => d.format());
-            console.log([map.getBounds().getSouthWest().lng, map.getBounds().getNorthEast().lng]);
+       //     console.log([map.getBounds().getSouthWest().lng, map.getBounds().getNorthEast().lng]);
             x = d3.scale.linear()
                 .domain([map.getBounds().getSouthWest().lng, map.getBounds().getNorthEast().lng])
                 .range([0, width]);
