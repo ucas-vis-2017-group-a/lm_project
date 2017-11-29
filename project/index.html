@@ -1,35 +1,26 @@
-<!doctype html>
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/jumbotron/ -->
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="static/img/favicon.ico">
-    <!--我是孟德超-->
-    <title>垃圾短信的起源</title>
+    <link rel="icon" href="icon.png">
+
+    <title>Jumbotron Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./static/css/Jumbotron Template/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="static/css/dashboard.css" rel="stylesheet">
-    <script src="static/js/jquery.js"></script>
-    <script src="static/js/d3js.org/d3.v3.min.js"></script>
-    <!--<script>window.jQuery || document.write('<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"><\/script>')</script>-->
-    <script src="static/js/popper.min.js"></script>
-    <script src="static/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=oGKYINzhFdagSN9SQpoY1Tm1iIxvEe21"></script>
-    <script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
-    <style>
-        iframe{
-            float:left;
-        }
-    </style>
+    <link href="./static/css/Jumbotron Template/jumbotron.css" rel="stylesheet">
 </head>
 
 <body>
+
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <a class="navbar-brand" href="index.html">撸猫</a>
@@ -48,41 +39,81 @@
                     <li class="nav-item">
                         <a class="nav-link" href="vis-index.html">可视化</a>
                     </li>
-
-
                     <li class="nav-item">
                         <a class="nav-link" href="help.html">帮助</a>
                     </li>
 
-
                 </ul>
-
-
             </div>
         </nav>
     </header>
 
-    <div class="container-fluid">
-        <div class="row">
-            <!-- heatmap和trajectory将通过iframe加载-->
-            <div id="container">
+    <main role="main">
 
-
-
-        <link rel="stylesheet" href="https://stackedit.io/res-min/themes/base.css" />
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
-
-        <body><div class="container"><h1 id="垃圾短信的起源">垃圾短信的起源</h1>
-
-        <p>作者 孟德超 刘亦昕 马明明 吕忠泽</p></div></body>
-
-
-
+        <!-- Main jumbotron for a primary marketing message or call to action -->
+        <div class="jumbotron" style="margin-bottom:0; border-radius:0;">
+            <div class="container">
+                <h1 class="display-3">垃圾短信的起源</h1>
+                <h5>本项目根据手机卫士提供的垃圾短信接收数据，可视化垃圾短信接受地理位置在北京城区内的空间、时间的特性，为不同职位的人民警察提供交互式协助。</h5>
+                <p>
+                    <a class="btn btn-primary btn-lg" href="vis-index" role="button">Explore »</a>
+                </p>
             </div>
         </div>
-    </div>
 
+        <div class="jumbotron" style="background-image: url(./static/img/data.jpg); background-size: 100% 100%; color:white;margin-bottom:0; border-radius:0;">
+            <div class="container">
+                <h2>数据分析</h2>
+                <p>数据集来自ChinaVis2017挑战赛第一题，数据时间跨度63天，覆盖北京市区内安装安全卫士的手机用户。</p>
+                <p>内容：在万种垃圾短信中，“代开发票”频率最高</p>
+                <img class="center" alt="词云" src="./static/img/word-cloud.png">
+                <p>空间分布：在北京16个区中，朝阳区是垃圾短信重灾区，其次有通州、丰台、海淀区。</p>
+                <p>
+                    <a class="btn btn-secondary" href="vis-index.html" role="button">View details »</a>
+                </p>
+            </div>
+        </div>
 
+        <div class="jumbotron" style="background-image: url(./static/img/light.jpg); background-size: 100% 100%; margin-bottom:0; border-radius:0;">
+            <div class="container">
+                <h2>场景1</h2>
+                <p>
+                    警局领导查看北京市内各区垃圾短信猖獗程度，为警局进行针对某类事件立案提供决策建议。</p>
+                <img class="center" alt="场景1" src="./static/img/scenario1.png">
+                <p>领导可查看网站提供的“上帝视角”垃圾短信接收热力图，同时辅助的饼图可以直观的看到每个区垃圾短信数目占比。</p>
+                <p>
+                    <a class="btn btn-secondary" href="vis-index.html" role="button">View details »</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="jumbotron" style="background-image: url(./static/img/dark.jpg); background-size: 100% 100%; color: white; margin-bottom:0; border-radius:0;">
+            <div class="container">
+                <h2>场景2</h2>
+                <p>某区某派出所警员计划抓捕相关嫌疑人行动，需要尽可能在正确的时间和地点展开抓捕。</p>
+                <img class="center" alt="场景2" src="./static/img/scenario2.png">
+                <p>警员首先框选想要查看的地区、选择想要查看的日期，后通过参考短信数目-时间柱状图点选时间轴，确定轨迹图播放时域。警员可以通过观察轨迹播放图，确定嫌疑人出没的时间地点。
+                </p>
+                <p>
+                    <a class="btn btn-secondary" href="vis-index.html" role="button">View details »</a>
+                </p>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="container">
+        <p>© UCAS-VIS-GROUP-A 2017</p>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./static/css/Jumbotron Template/jquery-3.2.1.slim.min.js.download" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="./static/css/Jumbotron Template/popper.min.js.download"></script>
+    <script src="./static/css/Jumbotron Template/bootstrap.min.js.download"></script>
 </body>
 
 </html>

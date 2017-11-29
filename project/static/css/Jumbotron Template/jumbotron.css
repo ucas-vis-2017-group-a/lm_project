@@ -1,0 +1,23 @@
+/* Move down content because we have a fixed navbar that is 3.5rem tall */
+body {
+  padding-top: 3.5rem;
+}
+
+img {
+  position: relative;
+  top: 0;
+  left: 0;
+  padding-bottom: 20px;
+  height: 50%;
+}
+
+img.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.display-3 > p {
+  size: 200px;
+  font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+}
