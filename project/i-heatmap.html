@@ -193,7 +193,7 @@
         var outerRadius = width / 2
         var innerRadius = width / 4;
         var arc = d3.svg.arc()
-        //.innerRadius(innerRadius)
+        .innerRadius(innerRadius)
             .outerRadius(outerRadius);
 
         var color = d3.scale.category10();
@@ -238,7 +238,7 @@
             }
 
 
-            if (m >= 1 && m <= 63) {
+            if (m >= 0 && m <= 63) {
 
                 var arcs = svg1.selectAll("g")
                     .data(pie(dataset[m]))
@@ -339,7 +339,7 @@
             }
 
 
-            if (m >= 1 && m <= 63) {
+            if (m >= 0 && m <= 63) {
 
                 var arcs = svg2.selectAll("g")
                     .data(pie(dataset[m]))
