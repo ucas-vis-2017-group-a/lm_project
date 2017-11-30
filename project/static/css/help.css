@@ -1,0 +1,39 @@
+img {
+    top: 20px;
+    bottom: 20px;
+    width: 100%;
+}
+h1 {
+    float: left;
+    margin-left: 30px;
+    margin-bottom: 30px;
+}
+h2 {
+    color: rgb(62, 62, 161);
+    float: left;
+    margin-left: 10px;
+}
+.tips {
+    float: left;
+    height: 50px;
+    width: auto;
+    margin-bottom: 10px;
+}
+.jumbotron {
+    margin-top: 55px;
+    text-align: center;
+    height: auto;
+}
+.jumbotron .btn {
+    padding: 14px 24px;
+    font-size: 21px;
+}
+.row {
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 50px;
+}
+.col-lg-6 {
+    border-radius: 1px;
+    border-color: grey;
+}
