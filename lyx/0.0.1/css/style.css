@@ -1,0 +1,41 @@
+body {
+	  width : 100%;
+	  height : 100%;
+	  overflow : hidden;
+	  background-color : rgb(26, 25, 25);
+	  font-family: "helvetica";
+}
+.main {
+	  position : relative;
+	  width : 85%;
+	  height : 100%;
+	  margin : 4px;
+	  float: right;
+	  background-color : rgba(42, 41, 61, 0.933);
+}
+.left {
+	position : relative;
+	width: 10%;
+    height: 100%;
+    margin: 4px;
+    float: left;
+    text-align: left;
+    border: #969696 solid thin;
+    padding: 5px;
+	background-color : rgba(162, 157, 229, 0.933);
+	color : rgb(24, 25, 26);
+}
+.slider { 
+	  position : absolute;
+	  bottom : 0;
+	  right : 2px;
+	  width : 300px;
+	  height : 16px;
+	  cursor : pointer;
+	  border-radius : 8px 0 0 0;
+	  background-color : rgb(143, 141, 141);
+}
+.section-guide {
+	cursor : pointer;
+	font-size: 20px;
+}
